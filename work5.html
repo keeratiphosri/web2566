@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Screen Layout</title>
+<style>
+  .container {
+    display: flex;
+  }
+  .left {
+    flex: 1;
+    display: flex;
+  }
+  .left img {
+    width: 40%;
+    height: 80%;
+  }
+  .right {
+    flex: 1;
+  }
+  .right video {
+    width: 50%;
+    height: auto;
+  }
+  .text-overlay {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.5); /* สีพื้นหลังสำหรับข้อความ */
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+    <h1>Work5: React Native (FaceDetector)</h1><br>
+  <div class="container">
+    <div class="left">
+        <div class="text-overlay">
+            <p>ภาพตัวอย่างหน้าจอ</p>
+          </div>
+      <img src="work5/1.jpg" alt="Image 1">
+      <img src="work5/2.jpg" alt="Image 2">
+    </div>
+    <div class="right">
+        <div class="text-overlay">
+            <p>VDO ตัวอย่าง</p>
+          </div>
+      <video controls>
+        <source src="work5/v1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  <h1>Source Code</h1>
+  <div data-snack-id="@keeratiphosri/49d9dc" data-snack-platform="mydevice" data-snack-preview="true" data-snack-theme="light" style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
+<script async src="https://snack.expo.dev/embed.js"></script>
+</body>
+</html>
+
+
+
