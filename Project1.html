@@ -2,50 +2,84 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>Amazons VR </title>
+  <title>Amazons VR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
   <a-scene>
-    <!-- ฉาก VR  -->
+    <!-- ฉาก VR -->
     <a-sky src="project/view.jpg"></a-sky>
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#00FF00"></a-plane>
-   
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="30" color="#00FF00"></a-plane>
+
+    <!-- กำแพง 4 ด้าน -->
+    <a-plane position="0 2 -10" rotation="0 0 0" width="20" height="4" color="#FF0000"></a-plane>
+    <a-plane position="0 2 10" rotation="0 180 0" width="20" height="4" color="#FF0000"></a-plane>
+    <a-plane position="10 2 0" rotation="0 -90 0" width="20" height="4" color="#FF0000"></a-plane>
+    <a-plane position="-10 2 0" rotation="0 90 0" width="20" height="4" color="#FF0000"></a-plane>
+
     <!-- รูปภาพในฉาก -->
-    <a-image src="project/forest.jpg" position="0 2 1" width="10" height="4"></a-image>
     <a-image src="project/forest.jpg" position="0 2 -9" width="10" height="4"></a-image>
 
     <!-- เสียงสัตว์ -->
     <a-sound src="project/forest_sound.mp3" autoplay="true" position="0 2 -4"></a-sound>
 
     <!-- โมเดลสัตว์และคำอธิบาย -->
-    <a-entity gltf-model="url(project/jaguar.glb)" position="0 1 -3" scale="10 10 10"
-    animation="property: position; to: 3 0 -6; dur: 2000; easing: linear" 
-    animation__2="property: rotation;; to: 0 360 0; dur: 10000; loop: true;" ></a-entity>
+    <a-entity id="jaguar" gltf-model="url(project/jaguar.glb)" position="0 1 -3" scale="10 10 10"
+    animation="property: position; to: 3 0 -6; dur: 2000; easing: linear"></a-entity>
     <a-image src="project/jaguarinfo.png" position="0 1 -3" width="2" height="2"
     animation="property: position; to: 3 2 -7; dur: 2000; easing: linear"></a-image>
-    
-    <a-entity gltf-model="url(project/Green Anaconda.glb)" position="0 1 -3" scale="30 30 30"
-    animation="property: position; to: 0 0 -6; dur: 2000; easing: linear"
-    animation__2="property: rotation;; to: 0 360 0; dur: 10000; loop: true;" ></a-entity>
+
+    <a-entity id="anaconda" gltf-model="url(project/Green Anaconda.glb)" position="0 1 -3" scale="30 30 30"
+    animation="property: position; to: 0 0 -6; dur: 2000; easing: linear"></a-entity>
     <a-image src="project/anoconda.png" position="0 1 -3" width="2" height="2"
     animation="property: position; to: 0 2 -7; dur: 2000; easing: linear"></a-image>
 
-    <a-entity gltf-model="url(project/Frog.glb)" position="0 1 -3" scale="30 30 30"
-    animation="property: position; to: -3 0 -6; dur: 2000; easing: linear"
-    animation__2="property: rotation;; to: 0 360 0; dur: 10000; loop: true;" ></a-entity>
+    <a-entity id="frog" gltf-model="url(project/Frog.glb)" position="0 1 -3" scale="30 30 30"
+    animation="property: position; to: -3 0 -6; dur: 2000; easing: linear"></a-entity>
     <a-image src="project/froginfo.png" position="0 1 -3" width="2" height="2"
     animation="property: position; to: -3 2 -7; dur: 2000; easing: linear"></a-image>
 
-    <!-- ชื่อผู้จัดทำ -->
-    <a-text value="Keerati Phosri 643020354-3" position="-5 1 -2"
-    animation="property: position; to: -1 1 -2.2; dur: 2000; easing: linear; loop: false">
 
-    <a-text value="Chatmongkhon Oatthachon 643020360-8" position="-5 1 -1"
-    animation="property: position; to: 0 0.5 0; dur: 2000; easing: linear; loop: false">
-    
-    <a-text value="Tanakrit Saobai    643020374-7" position="-5 1 0"
-    animation="property: position; to: 0 0.5 0; dur: 2000; easing: linear; loop: false">
+   <!-- ชื่อผู้จัดทำ -->
+   <a-text value="Keerati Phosri 643020354-3" position="-5 1 -2"
+   animation="property: position; to: -4 2 -2.2; dur: 2000; easing: linear; loop: false">
+
+   <a-text value="Chatmongkhon Oatthachon 643020360-8" position="-5 1 -1"
+   animation="property: position; to: 0 0.5 0; dur: 2000; easing: linear; loop: false">
+   
+   <a-text value="Tanakrit Saobai    643020374-7" position="-5 1 0"
+   animation="property: position; to: 0 0.5 0; dur: 2000; easing: linear; loop: false">
   </a-scene>
+
+  <script>
+    // ฟังก์ชันสำหรับเคลื่อนที่และเดินตรงแบบสุ่มในพื้นที่
+    function randomWalk(entity, range) {
+      setInterval(() => {
+        // สุ่มตำแหน่งใหม่ในขอบเขตที่กำหนด
+        const newPos = {
+          x: (Math.random() * range * 2) - range,
+          y: entity.getAttribute('position').y,
+          z: (Math.random() * range * 2) - range
+        };
+        // เคลื่อนที่ไปยังตำแหน่งใหม่
+        entity.setAttribute('animation', {
+          property: 'position',
+          to: `${newPos.x} ${newPos.y} ${newPos.z}`,
+          dur: 2000,
+          easing: 'linear'
+        });
+
+        // หมุนโมเดลให้หันหน้าไปทางตำแหน่งใหม่
+        const currentPos = entity.getAttribute('position');
+        const angle = Math.atan2(newPos.x - currentPos.x, newPos.z - currentPos.z) * 180 / Math.PI;
+        entity.setAttribute('rotation', `0 ${angle} 0`);
+      }, 3000); // เปลี่ยนทิศทางทุก 3 วินาที
+    }
+
+    // เรียกใช้ฟังก์ชันสำหรับเดินตรงแบบสุ่มสำหรับสัตว์ทั้ง 3 ตัว
+    randomWalk(document.getElementById('jaguar'), 5);
+    randomWalk(document.getElementById('anaconda'), 5);
+    randomWalk(document.getElementById('frog'), 5);
+  </script>
 </body>
 </html>
